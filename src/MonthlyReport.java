@@ -1,16 +1,13 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 
 public class MonthlyReport {
     int month;
-    ArrayList<MonthlyRecordReport> rows = new ArrayList<>();
+    final ArrayList<MonthlyRecordReport> rows = new ArrayList<>();
 
     public MonthlyReport(int month, String path) {
         this.month = month;
-        String content = readFileContentsOrNull(path);
+        String content = FileReader.readFileContentsOrNull(path);
         if (content == null) {
             return;
         }
@@ -37,15 +34,6 @@ public class MonthlyReport {
     }
 
 
-    private String readFileContentsOrNull(String path) {
-        try {
-            return Files.readString(Path.of(path));
-        } catch (IOException e) {
-            System.out.println("Невозможно прочитать файл с месячным отчётом. Возможно, файл не находится в нужной директории.");
-            System.out.println(path);
-            return null;
-        }
-    }
 
 
 }
