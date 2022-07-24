@@ -9,53 +9,52 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             printMenu();
-            int userInput = scanner.nextInt();
+            int inputMenuItem = scanner.nextInt();
 
-            if (userInput == 0) {
-                break;
-            } else if (userInput == 1) {
-                monthReports = new MonthReports();
-                System.out.println("Месячные отчеты успешно считаны");
+            switch (inputMenuItem) {
+                case 0:
+                    break;
+                case 1:
+                    monthReports = new MonthReports();
+                    System.out.println("Месячные отчеты успешно считаны");
+                    break;
+                case 2:
+                    yearlyReport = new YearlyReport(2021, "resources/y.2021.csv");
+                    System.out.println("Годовой отчет успешно считан");
+                    break;
+                case 3:
+                    if (yearlyReport == null || monthReports == null) {
+                        System.out.println("Файлы не считаны. Для сверки выполните 1 и 2 команды");
+                        continue;
+                    }
+                    yearlyReport.checkReports(monthReports);
+                    break;
 
-            } else if (userInput == 2) {
-                yearlyReport = new YearlyReport(2021, "resources/y.2021.csv");
-                System.out.println("Годовой отчет успешно считан");
+                case 4:
+                    if (monthReports == null) {
+                        System.out.println("Файлы не считаны. Перед выводом информации выполните 1 команду");
+                        continue;
+                    }
+                    monthReports.getInfoMonth();
+                    break;
+                case 5:
+                    if (yearlyReport == null) {
+                        System.out.println("Годовой файл не считан. Перед выводом информации выполните 2 команду");
+                        continue;
+                    }
+                    yearlyReport.printYearYearlyReport();
+                    yearlyReport.countMonthlyProfit();
+                    yearlyReport.calculateAverage(true);
+                    yearlyReport.calculateAverage(false);
+                    break;
+                default:
+                    System.out.println("Извините, такой команды пока нет.");
 
-
-            } else if (userInput == 3) {
-                if (yearlyReport == null || monthReports == null) {
-                    System.out.println("Файлы не считаны. Для сверки выполните 1 и 2 команды");
-                    continue;
-                }
-                yearlyReport.checkReports(monthReports);
-
-
-            } else if (userInput == 4) {
-                if (monthReports == null) {
-                    System.out.println("Файлы не считаны. Перед выводом информации выполните 1 команду");
-                    continue;
-                }
-                monthReports.getInfoMonth();
-
-
-            } else if (userInput == 5) {
-                if (yearlyReport == null) {
-                    System.out.println("Годовой файл не считан. Перед выводом информации выполните 2 команду");
-                    continue;
-                }
-                yearlyReport.printYearYearlyReport();
-                yearlyReport.countMonthlyProfit();
-                yearlyReport.calculateAverage(true);
-                yearlyReport.calculateAverage(false);
-
-
-            } else {
-                System.out.println("Извините, такой команды пока нет.");
             }
 
+            System.out.println("Программа завершена");
+            scanner.close();
         }
-        System.out.println("Программа завершена");
-        scanner.close();
     }
 
     private static void printMenu() {
@@ -68,5 +67,6 @@ public class Main {
         System.out.println("0 - Выход");
     }
 }
+
 
 

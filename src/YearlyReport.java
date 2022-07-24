@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 
 public class YearlyReport {
-    int year;
-    final ArrayList<YearlyRecordReport> rows = new ArrayList<>();
+    private static final String REPORT_TYPE = "годовым";
+    private final int year;
+    private final ArrayList<YearlyRecordReport> rows = new ArrayList<>();
 
     public YearlyReport(int year, String path) {
         this.year = year;
-        String content = FileReader.readFileContentsOrNull(path);
+        String content = FileReader.readFileContentsOrNull(path, REPORT_TYPE);
         String[] lines = content.split("\n");
         for (int i = 1; i < lines.length; i++) {
             String line = lines[i];
@@ -19,7 +20,6 @@ public class YearlyReport {
     }
 
 
-
     public void printYearYearlyReport() {
         System.out.println("Год отчета " + year);
     }
@@ -28,65 +28,50 @@ public class YearlyReport {
         int amountSum = 0;
         int count = 0;
         for (YearlyRecordReport row : rows) {
-            if (row.isExpense == isExpense) {
-                amountSum = amountSum + row.amount;
+            if (row.isExpense() == isExpense) {
+                amountSum = amountSum + row.getAmount();
                 count++;
             }
         }
 
-        int avg =  amountSum / count;
+        int avg = amountSum / count;
         if (isExpense) {
             System.out.println("Средний расход за все месяцы составил: " + avg + " рублей");
-        } else{
+        } else {
             System.out.println("Средний доход за все месяцы составил: " + avg + " рублей");
         }
-
     }
 
-    public int getAmount (int monthNumber, boolean isExpense) {
+    public int getAmount(int monthNumber, boolean isExpense) {
         for (YearlyRecordReport row : rows) {
-            if (row.month == monthNumber && row.isExpense == isExpense) {
-                return row.amount;
+            if (row.getMonth() == monthNumber && row.isExpense() == isExpense) {
+                return row.getAmount();
             }
         }
         return 0;
     }
 
 
-    public void countMonthlyProfit (){
+    public void countMonthlyProfit() {
         for (int i = 1; i < 13; i++) {
             int expenseAmount = getAmount(i, true);
             int notExpenseAmount = getAmount(i, false);
-            int monthlyProfit = notExpenseAmount-expenseAmount;
-            if (monthlyProfit!=0) {
+            int monthlyProfit = notExpenseAmount - expenseAmount;
+            if (monthlyProfit != 0) {
                 System.out.println("Прибыль за " + i + " месяц составила " + monthlyProfit + " рублей.");
             }
         }
     }
 
-
-
-
-
-
-
-
-
-
     public void checkReports(MonthReports monthReports) {
         for (YearlyRecordReport row : rows) {
-            MonthlyReport monthlyReport = monthReports.getMonthlyReportByMonth(row.month);
-            int countBalance = monthlyReport.countBalance(row.isExpense);
-            if (countBalance == row.amount) {
+            MonthlyReport monthlyReport = monthReports.getMonthlyReportByMonth(row.getMonth());
+            int countBalance = monthlyReport.countBalance(row.isExpense());
+            if (countBalance == row.getAmount()) {
                 System.out.println("Сверка месячного и годового отчета прошла успешно");
             } else {
-                System.out.println("Обнаружено несоответсвие в месяце номер " + row.month);
+                System.out.println("Обнаружено несоответсвие в месяце номер " + row.getMonth());
             }
         }
-
-
     }
-
-
-
 }

@@ -2,12 +2,14 @@ import java.util.ArrayList;
 
 
 public class MonthlyReport {
-    int month;
-    final ArrayList<MonthlyRecordReport> rows = new ArrayList<>();
+    private static final String REPORT_TYPE = "месячным";
+
+    private final int month;
+    private final ArrayList<MonthlyRecordReport> rows = new ArrayList<>();
 
     public MonthlyReport(int month, String path) {
         this.month = month;
-        String content = FileReader.readFileContentsOrNull(path);
+        String content = FileReader.readFileContentsOrNull(path, REPORT_TYPE);
         if (content == null) {
             return;
         }
@@ -26,16 +28,20 @@ public class MonthlyReport {
     public int countBalance(boolean isExpense) {
         int sum = 0;
         for (MonthlyRecordReport row : rows) {
-            if (row.isExpense == isExpense) {
-               sum = sum + row.quantity*row.sumOfOne;
+            if (row.isExpense() == isExpense) {
+                sum = sum + row.getQuantity() * row.getSumOfOne();
             }
         }
         return sum;
     }
 
+    public int getMonth() {
+        return month;
+    }
 
-
-
+    public ArrayList<MonthlyRecordReport> getRows() {
+        return rows;
+    }
 }
 
 

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class MonthReports {
 
-    ArrayList<MonthlyReport> months;
+    private final ArrayList<MonthlyReport> months;
 
     public MonthReports() {
         this.months = new ArrayList<>();
@@ -18,7 +18,7 @@ public class MonthReports {
 
     public MonthlyReport getMonthlyReportByMonth(int month) {
         for (MonthlyReport monthlyReport : months) {
-            if (monthlyReport.month == month) {
+            if (monthlyReport.getMonth() == month) {
                 return monthlyReport;
             }
         }
@@ -28,39 +28,32 @@ public class MonthReports {
 
     public void getInfoMonth() {
         for (MonthlyReport monthlyReport : months) {
-            System.out.println("Месяц номер "+monthlyReport.month);
+            System.out.println("Месяц номер " + monthlyReport.getMonth());
             String maxItem = null;
             String maxWaste = null;
             int maxSum = 0;
             int maxWasteSum = 0;
-            for (MonthlyRecordReport row : monthlyReport.rows) {
+            for (MonthlyRecordReport row : monthlyReport.getRows()) {
 
-                if (!row.isExpense) {
-                    int sum = row.quantity * row.sumOfOne;
+                int sum = row.getQuantity() * row.getSumOfOne();
+                if (!row.isExpense()) {
                     if (sum > maxSum) {
                         maxSum = sum;
-                        maxItem = row.itemName;
+                        maxItem = row.getItemName();
                     }
 
 
                 } else {
-                    int sum = row.quantity * row.sumOfOne;
                     if (sum > maxWasteSum) {
                         maxWasteSum = sum;
-                        maxWaste = row.itemName;
+                        maxWaste = row.getItemName();
                     }
-
-
                 }
-
             }
             System.out.println("Самый прибыльный товар '" + maxItem + "' продан на сумму " + maxSum + " рублей");
             System.out.println("Самая большая трата  '" + maxWaste + "'. Потрачено " + maxWasteSum + " рублей");
-
         }
     }
-
-
 }
 
 
