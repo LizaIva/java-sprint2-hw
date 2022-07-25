@@ -1,3 +1,5 @@
+package project.yearly_report;
+
 public class YearlyRecordReport {
     private final int month;
     private final int amount;

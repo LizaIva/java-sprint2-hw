@@ -1,3 +1,9 @@
+package project.yearly_report;
+
+import project.FileReader;
+import project.monthly_report.MonthReports;
+import project.monthly_report.MonthlyReport;
+
 import java.util.ArrayList;
 
 public class YearlyReport {
@@ -18,7 +24,6 @@ public class YearlyReport {
             rows.add(new YearlyRecordReport(month, amount, isExpense));
         }
     }
-
 
     public void printYearYearlyReport() {
         System.out.println("Год отчета " + year);
@@ -50,7 +55,6 @@ public class YearlyReport {
         }
         return 0;
     }
-
 
     public void countMonthlyProfit() {
         for (int i = 1; i < 13; i++) {

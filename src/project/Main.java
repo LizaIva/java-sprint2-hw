@@ -1,3 +1,9 @@
+package project;
+
+import project.monthly_report.MonthReports;
+import project.yearly_report.YearlyReport;
+
+
 import java.util.Scanner;
 
 public class Main {
@@ -13,7 +19,9 @@ public class Main {
 
             switch (inputMenuItem) {
                 case 0:
-                    break;
+                    System.out.println("Программа завершена");
+                    scanner.close();
+                    return;
                 case 1:
                     monthReports = new MonthReports();
                     System.out.println("Месячные отчеты успешно считаны");
@@ -49,11 +57,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Извините, такой команды пока нет.");
-
             }
-
-            System.out.println("Программа завершена");
-            scanner.close();
         }
     }
 

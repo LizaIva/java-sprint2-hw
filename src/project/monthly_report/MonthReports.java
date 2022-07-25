@@ -1,3 +1,4 @@
+package project.monthly_report;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,6 @@ public class MonthReports {
             months.add(monthlyReport);
         }
     }
-
 
     public MonthlyReport getMonthlyReportByMonth(int month) {
         for (MonthlyReport monthlyReport : months) {
@@ -41,8 +41,6 @@ public class MonthReports {
                         maxSum = sum;
                         maxItem = row.getItemName();
                     }
-
-
                 } else {
                     if (sum > maxWasteSum) {
                         maxWasteSum = sum;

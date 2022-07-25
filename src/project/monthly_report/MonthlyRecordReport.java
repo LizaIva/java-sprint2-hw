@@ -1,3 +1,5 @@
+package project.monthly_report;
+
 public class MonthlyRecordReport {
     private final String itemName;
     private final boolean isExpense;
@@ -11,7 +13,6 @@ public class MonthlyRecordReport {
         this.sumOfOne = sumOfOne;
 
     }
-
 
     public String getItemName() {
         return itemName;
